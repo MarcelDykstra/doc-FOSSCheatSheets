@@ -121,7 +121,7 @@
   # e.g. > dd if=file.iso of=/dev/sda1 bs=10MB status=progress
 > sfdisk -d <disk.dev>  >  <part.table.file>         # Write disk partition table at <disk.dev> to description in <part.table.file>.
 > sfdisk <disk.dev>  <  <part.table.file>            # Write disk partition table description in <part.table.file> to disk partition table at <disk.dev>.
-> partprobe <disk.dev>                               # Inform Linux kernel of changes to partion table at <disk.dev>.
+> partprobe <disk.dev>                               # Inform Linux kernel of changes to partition table at <disk.dev>.
 > swapon <part.dev|swap.file>                        # Enable swap partition <part.dev> or swap file <swap.file>.
 > swapoff <part.dev|swap.file>                       # Disable swap partition <part.dev> or swap file <swap.file>.
 ```
@@ -365,7 +365,7 @@
 > systemctl start <service>               # Start systemd <service>.
 > systemctl stop <service>                # Stop systemd <service>.
 > systemctl status                        # Show tree view of systemd status.
-> systemctl status "<service>*            # Get status of systemd services with service-name starting with <service> (globing).
+> systemctl status "<service>*"           # Get status of systemd services with service-name starting with <service> (globing).
 > systemctl --user start <service>        # Start systemd user <service>.
 > systemctl --user stop <service>         # Stop systemd user <service>.
 > systemctl list-unit-files [--state=enabled] ["<service>*"]    # List unit files, possibly those enabled [--state=enabled] and

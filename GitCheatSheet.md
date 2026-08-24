@@ -29,7 +29,9 @@
 > git commit --amend                                       # Amend last commit (preferably before force pushing).
 > git commit --amend --author="Author <name>@domain.net"   # Amend author of last commit (preferably before force pushing).
 > git diff                                                 # Show differences in working directory with HEAD.
+> git diff HEAD~1                                          # Show difference of working directory with last commit.
 > git diff --cached                                        # Show differences of staging with HEAD.
+> git blame <file>                                         # Show for every line the author who made changes and SHA-1 hash of corresponding commit.
 > git reset --soft HEAD~1                                  # Revert last commit, keeping changes in working directory.
 > git reset --hard HEAD~1                                  # Revert last commit, removing changes in working directory.
 > git reset HEAD <file>                                    # Remove single <file> from staging.
