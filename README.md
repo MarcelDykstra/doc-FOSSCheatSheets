@@ -403,7 +403,7 @@
 | OPTIONS=(... debug ...)                          # during "makepkg -rs" package compilation;
                                                    # "debugedit" package should be installed and useful to have "$DEBUGINFOD_URLS" defined.
                                                    # Debug symbols are compiled as a separate debug package to be installed with software package.
-> objdump --syms <executable>                      # Check and show debug symbol table inside <executable>.
+> objdump --syms <executable|obj.file>...          # Show debug symbol table inside executablei <executable> or object file <obj.file> or multiple <executable|obj.file>.
 ```
 
 ## Networking Commands
@@ -414,7 +414,7 @@
 > ip link                                   # Show network interfaces.
 > ip link set dev <interface> up            # Bring network device <interface> up.
 > ip link set dev <interface> down          # Bring network device <interface> down.
-> ip addr add <ip-address>>/<netmask> [broadcast <b.ip-address>] dev <interface>    # Set manual IP addresses.
+> ip addr add <ip-address>/<netmask> [broadcast <b.ip-address>] dev <interface>    # Set manual IP addresses.
   # e.g. > ip addr add 192.168.1.1/24 broadcast 192.168.1.255 dev wpl3s0
 > ss | less                                 # Dump all TCP/IP and UNIX-socket statistics, pipe through "less" to read all.
 > rfkill list                               # List soft and hard blocks on wireless devices.
