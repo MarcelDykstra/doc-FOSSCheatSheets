@@ -4,6 +4,7 @@
 
 ```
 > pacman -Q                     # List of installed packages.
+> pacman -Qe                    # List of explicitly installed packages; not only dependencies of other packages.
 > pacman -Qi <package>          # Report info about <package>.
 > pacman -Ql <package>          # List files owned by <package>.
 > pacman -Qo <path>             # Report which package owns file located at <path>.
@@ -11,11 +12,13 @@
 > pacman -Q | grep "<reg.ex>"   # List installed packages, pipe to "grep" matching <reg.ex> (faster than "pacamn -Qs").
 > pacman -S <package>           # Install <package> from internet repository.
 > pacman -U <tarball>           # Install package from <package>.tar.zst (tarball).
-> pacman -Rs <package>          # Remove <package> and orphan dependencies.
+> pacman -Rns <package>         # Remove <package> and orphan dependencies; do not create file backups ".pacsave".
 > pacman -Rns $(pacman -Qdtq)   # Remove orphan packages remaining on system.
 > pacman -Scc                   # Clear package cache.
 > pacman -S archlinux-keyring   # Update archlinux-keyring (Required before "pacman -Syu" after no recent full package updates).
 > pacman -Syu                   # Full package updates.
+> makepkg -rs                   # Make and compile Arch Linux AUR package; required dependencies are installed and build dependencies are removed afterwards.
+> pacman -U <package.zst>       # Install package <package.zst> made with "makepkg -rs".
 > pactree <package>             # Show tree of package dependencies for <package>.
 > pactree -r <package>          # Show packages depending on <package>.
 ```

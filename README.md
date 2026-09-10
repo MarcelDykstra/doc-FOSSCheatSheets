@@ -45,7 +45,7 @@
 <!-- * Python & Cython — Cheat Sheet -->
 <!-- * Regular Expressions (RegEx — BRE, ERE, PCRE) — Cheat Sheet -->
 <!-- * Shells & Shell Scripts — Cheat Sheet -->
-<!-- * VIM — Cheat Sheet -->
+<!-- * VIM & Tmux — Cheat Sheet -->
 
 ## Files, Directories & Filesystem Commands
 
@@ -57,6 +57,7 @@
 > ls -a                      # List all, including hidden entries starting with "."
 > ls -lh                     # Long listing format, with human-readable file sizes.
 > ls -lah                    # Long listing format, output all with human-readable file sizes.
+> ls -d */                   # List only sub-directories in current directory, not files.
 > ls <*.ext>...              # List files matching <*.ext> or matching multiple <*.ext> (globing).
 > cd <dir>                   # Change directory to <dir>.
   # e.g. > cd /              # Change to root directory.
@@ -80,7 +81,7 @@
 > chown [<user>][:<group>] <file>...         # Change <file> or multiple <file> ownership to <user> and <group>.
 > chwon -R [<user>][:<group>] <path>...      # Change recursively all files in <path> or multiple <path>.
 > chmod (u,g,o)(=,+,-)(r,w,x) <file>...      # Change access rights on <file> or multiple <file>.
-                                             # (u=user, g=group, o=others)(+=add, -=remove, ==define)(r=read, w=write, x=execute)  
+                                             # (u=user, g=group, o=others)(+=add, -=remove, ==define)(r=read, w=write, x=execute)
   # e.g. > chmod ug+x <file>; chmod -w <file>
 > chmod -R (u,g,o)(=,+,-)(r,w,x) <path>...   # Change access rights recursively in <path> or multiple <path>.
 > chmod 000 <file>...         # Revoke all access rights on <file> or multiple <file>.
@@ -108,6 +109,7 @@
 > findmnt                     # List tree of mount-points.
 > mount                       # List current mount-points in filesystem.
 > mount <part.dev> <dest>     # Mount partition device <part.dev> at directory/mount-point to <dest> in filesystem.
+> mountpoint <path>           # Check if location <path> in filesystem is a mountpoint.
 > umount <part.dev>           # Unmount device <part.dev>.
 > umount <dest>               # Unmount mount-point <dest> in filesystem.
 > fdisk -l [<dev>]...         # List partition table(s), optionally for disk <dev> or multiple disk <dev>.
@@ -134,7 +136,7 @@
 > cat <file>... > <out.file>                  # Output <file> or multiple <file> content and write to <out.file>.
 > cat <file>... >> <out.file>                 # Output <file> or multiple <file> content and append to <out.file>.
 > cat > <out.file>                            # Take input from stdin (user) and write to <out.file> (~Ctrl+c~ or ~Ctrl+d~ to exit).
-> cat <file>... | less                        # Output <file> or multiple <file> content, pipe to "less" (quit "less" with ~q~;
+> cat <file>... | less                        # Output <file> or multiple <file> content, pipe to "less" (quit "less" with ~q~);
                                               # start search with ~/~<string|reg.exp>, next match ~n~, previous match ~N~).
 > cat <file>... | tail                        # Output <file> or multiple <file> content, pipe to "tail" giving only tail of <file>.
 > cat <file>... | head                        # Output <file> or multiple <file> content, pipe to "head" giving only head of <file>.
@@ -193,6 +195,7 @@
 
 ```
 > md5sum <file>...                                # Generate MD5 message digest hash(es) of <file> or multiple <file>.
+> sha256sum <file>...                             # Generate SHA256 message digest hash(es) of <file> or multiple <file>.
 > sha512sum <file>...                             # Generate SHA512 message digest hash(es) of <file> or multiple <file>.
 > gpg -c --cipher-algo aes <plaintext>            # Create AES encrypted file <plaintext>.gpg.
 > gpg --output <plaintext> --decrypt <file>.gpg   # Decrypt AES encrypted file <file>.gpg, creating <plaintext>.
@@ -254,13 +257,13 @@
 > printenv                                         # Print all environment variables.
 > echo "<string>"                                  # Output text <string>.
 > echo $VAR                                        # Output $VAR shell variable content.
-> printf "\e[<esc.code>;...m%s\e[0m" "<string>"    # Output ECMA-48 (ANSI) escape "\e[<esc.code>m" coded text <string>:
+> printf "\e[<esc.code>;...m%s\e[0" "<string>"     # Output ECMA-48 (ANSI) escape "\e[<esc.code>m" coded text <string>:
                                                    # 0=reset color and style.
                                                    # color: +30=normal fg., +40=normal bg., +90=bright fg., +100=bright bg. —
                                                    #        0=black, 1=red, 2=green, 3=yellow, 4=blue, 5=magenta, 6=cyan, 7=white.
                                                    # style: 1=bold, 2=dim, 3=italic, 4=underline, 5/6=blink, 7=inverse,
                                                    #        8=hidden, 9=strike-through.
-  # e.g. > printf "\e[31;44;1;5mHello World\e0m"   # Output "Hello World" bold and blinking on a normal blue bg. with normal red fg.
+  # e.g. > printf "\e[31;44;1;5mHello World\e0"    # Output "Hello World" bold and blinking on a normal blue bg. with normal red fg.
 > whereis <command>                                # Locate <command> and manual page for <command>.
 > which <command>                                  # Give full path of <command>.
 > date                                             # Give system date and time.
@@ -336,9 +339,9 @@
 > uptime                                  # Report how long system has been running.
 > dmesg                                   # List kernel messages.
 > dmesg | tail                            # List kernel messages, pipe through "tail" to only show latest kernel messages.
-> lsusb                                   # List USB devices.
-> lspci                                   # List PCI devices (on x86 architecture).
-> lscpu                                   # List CPU architecture.
+> lsusb [-v]                              # List USB devices, optionally with verbose [-v] detailed information.
+> lspci [-v]                              # List PCI devices (on x86 architecture), optionally with verbose [-v] detailed information.
+> lscpu                                   # List information about CPU architecture.
 > strace <executable>                     # Trace system calls and signals occurring during execution of <executable>.
 > strace -c <executable>                  # Trace and count system calls and signal occurring during execution of <executable>.
 > lsmod                                   # List loaded Linux kernel modules.
@@ -387,6 +390,8 @@
 > systemd-inhibit --list                  # Show which process(es) inhibit(s) sleep, shutdown, hibernation.
 > systemd-analyze critical-chain          # Show boot-sequence critical chain.
 > systemd-analyze blame                   # Show time it took for services to initialise.
+> udevadm monitor (--kernel,--udev)       # Monitor kernel uevents [--kernel], udev events [--udev].
+> udevadm info -a --name /dev/<dev>       # List attributes for "/dev/<dev>", useful information for rules in "/etc/udev/rules/".
 > varlinkctl                              # Introspect and monitor systemd Varlink communication (Point-to-point UNIX-socket IPC, passing human-readable JSON data).
 > busctl                                  # Introspect and monitor systemd D-Bus communication (Publish-subscribe system-bus broker daemon IPC, passing binary data).
 
@@ -396,27 +401,43 @@
 > coredumpctl dump <pid> --output=<dump.file>      # Write core dump to <dump.file>, possibly matching <pid>.
 > coredumpctl debug <pid>                          # Invoke gdb debugger on core dump, possibly matching <pid>.
 > gdb <executable> <dump.file>                     # Invoke gdb debugger on <executable> with core dump <dump.file>.
-                                                   # Use gdb commands: "bt" (backtrace), "bt full", "list" (surrounding source-code), &c.
+                                                   # Use gdb commands: "bt" (backtrace), "bt full", "list" (surrounding source-code), "quit", &c.
 
 # Generate debug symbols — Arch Linux
 [/etc/makepkg.conf]                                # Have "debug" option included (not "!debug"), to generate debug symbols
 | OPTIONS=(... debug ...)                          # during "makepkg -rs" package compilation;
                                                    # "debugedit" package should be installed and useful to have "$DEBUGINFOD_URLS" defined.
                                                    # Debug symbols are compiled as a separate debug package to be installed with software package.
-> objdump --syms <executable|obj.file>...          # Show debug symbol table inside executablei <executable> or object file <obj.file> or multiple <executable|obj.file>.
+> objdump --syms <executable|obj.file>...          # Show debug symbol table inside executable <executable> or object file <obj.file> or multiple <executable|obj.file>.
 ```
 
 ## Networking Commands
 
 ```
-> ip addr                                   # Network information.
-> ip route                                  # Show routing table.
-> ip link                                   # Show network interfaces.
-> ip link set dev <interface> up            # Bring network device <interface> up.
-> ip link set dev <interface> down          # Bring network device <interface> down.
+> ip [<arg>...] --help                                                             # Ask help about the many arguments.
+> ip addr                                                                          # Network information.
+> ip route                                                                         # Show routing table.
+> ip link                                                                          # Show network interfaces.
+> ip link set dev <interface> (up,down)                                            # Bring network device <interface> up or down.
 > ip addr add <ip-address>/<netmask> [broadcast <b.ip-address>] dev <interface>    # Set manual IP addresses.
   # e.g. > ip addr add 192.168.1.1/24 broadcast 192.168.1.255 dev wpl3s0
-> ss | less                                 # Dump all TCP/IP and UNIX-socket statistics, pipe through "less" to read all.
+> nmcli [<arg>...] --help                                                          # Ask help about the many arguments — NetworkManager.
+> nmcli general status                                                             # Show network connectivity status.
+> nmcli general permissions                                                        # Show Polkit(PolicyKit) permissions for network tasks.
+> nmcli networking (on,off)                                                        # Turn network on or off.
+> nmcli radio (all,wifi,wwan) (on,off)                                             # Turn radio on or off for either: all, wifi or wwan.
+> nmcli connection show                                                            # Show active connection profiles and inactive available connection profiles.
+> nmcli connection (up,down) <id>                                                  # Bring network connection profile <id> up or down.
+> nmcli connection add type ethernet con-name "<name>" ifname <dev>                # Create standard DHCP ethernet connection profile <name>,
+                                                                                   # with dynamic assigned IP on device <dev>
+                                                                                   # (find <dev> with "nmcli device status").
+> nmcli connection delete <id>                                                     # Delete the network connection profile <id>.
+> nmcli connection delete id "<id with spaces>"                                    # Delete the network connection profile <id with spaces>.
+> nmcli device status                                                              # Show status of network devices.
+> nmcli device wifi connect <ssid> password <password>                             # Connect to wifi network name <ssid> with password <password>.
+> nmcli device wifi rescan; nmcli device wifi list                                 # Scan for available wifi networks and give a list.
+> nmcli monitor                                                                    # Monitor any changes in NetworkManager.
+> ss | less                                 # Dump all TCP/IP and UNIX-socket statistics, pipe through "less" to read all (quit "less" with ~q~).
 > rfkill list                               # List soft and hard blocks on wireless devices.
 > ping <domain|ip-address>                  # Ping network at <domain> or <ip-address>.
 > traceroute <domain|ip-address>            # Report the route packets trace to <domain> or <ip-address>.
@@ -425,8 +446,8 @@
 > curl <url>                                # Get response from server at <url>.
   # e.g. > curl -s 6.ipquail.com/ip         # Get silently the current outward facing IPv6 address through server response at "6.ipquail.com/ip".
 > wget <url>...                             # Download files from internet at <url> or multiple <url>.
-> ssh-keygen -t rsa -b 4096 -C "user_email@host.domain"   # Generate SSH public/private RSA-keys (optionally no passphrase).
-> ssh-keygen -t rsa -b 4096 -C "user@host"                # Generate SSH public/private RSA-keys (optionally no passphrase).
+> ssh-keygen -t rsa -b 4096 -C "user_email@host.domain"   # Generate SSH public/private RSA-keys (optionally give no passphrase).
+> ssh-keygen -t rsa -b 4096 -C "user@host"                # Generate SSH public/private RSA-keys (optionally give no passphrase).
 > ssh-copy-id -i <key.pub> <user>@<host>                  # Securely copy SSH public-key <key.pub> to <user> at <host>, authorising future logins.
 > ssh <user>@<host>                                       # Remote secure shell SSH login for <user> at <host>.
 > scp [<user>@<s.host>:]<s.file|s.path> [<user>@<d.host>:]<d.file|d.path>
@@ -434,6 +455,7 @@
 > scp -r -p [<user>@<s.host>:]<s.file|s.path> [<user>@<d.host>:]<d.file|d.path>
   # Secure copy <s.file|s.path> from [<user>@<s.host>] to <d.file|d.path> at [<user>@<d.host>] recursively,
   # preserving file attributes (e.g. date/time).
+> bluetoothctl         # Interactive Bluetooth control tool.
 > i2cdetect -y -r 1    # Detect connected I2C-chips on e.g. Raspberry PI or BeagleBone.
 ```
 

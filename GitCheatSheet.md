@@ -5,7 +5,7 @@
 ```
 > git config --global user.name "<user name>"              # Set Git user name.
 > git config --global user.email "<user e-mail>"           # Set Git user e-mail.
-> git config --global core.editor <editor>                 # Set Git editor.
+> git config --global core.editor <editor>                 # Set Git editor (e.g. vim, nano).
 > git config --global init.defaultBranch main              # Set "main" to be the default branch name.
 > git config list                                          # List all globally defined variables.
 > git init                                                 # Create new Git repository.
@@ -26,8 +26,8 @@
 > git add <file>...                                        # Add changes in <file> or multiple <file> from working directory to staging.
 > git add -u                                               # Add changes in already tracked files to staging.
 > git commit -m "<msg>"                                    # Commit changes to staging, providing commit message <msg>.
-> git commit --amend                                       # Amend last commit (preferably before force pushing).
-> git commit --amend --author="Author <name>@domain.net"   # Amend author of last commit (preferably before force pushing).
+> git commit --amend [--no-edit]                           # Amend last commit (preferably before having to force push), optionally without editing [--no-edit] commit message.
+> git commit --amend --author="Author <name>@domain.net"   # Amend author of last commit (preferably before having to force push).
 > git diff                                                 # Show differences in working directory with HEAD.
 > git diff HEAD~1                                          # Show difference of working directory with last commit.
 > git diff --cached                                        # Show differences of staging with HEAD.
@@ -53,8 +53,10 @@
 ## Branches
 
 ```
+> git branch -vv                                           # Show local branches with related remote tracking branches.
 > git branch <branch>                                      # Create new <branch>.
 > git branch {-u|--set-upstream-to} <remote>/[<branch>]    # Set upstream <remote> for current branch or possibly specific <branch>.
+> git branch -m <old.branch> <new.branch>                  # Rename locally current <old.branch> to new name <new.branch>.
 > git merge <branch>                                       # Merge current branch with other <branch>.
 > git branch {-d|-D} <branch>                              # Delete <branch>.
 > git branch {-d|-D} -f <branch>                           # Delete <branch>, forced when branch has not been merged.
@@ -66,16 +68,23 @@
                                                            # Setting up for future Git pull commands.
 > git push <remote> :<branch>                              # Delete <branch> remotely on <remote> Git repository.
 > git push <remote> --delete <branch>                      # Delete <branch> remotely on <remote> Git repository.
-> git remote prune                                         # Clean up references to remote branches no longer existing on the remote Git repository.
+> git remote prune <remote>                                # Clean up references to remote branches no longer existing on the <remote> Git repository.
 ```
 
 ## Tags
 
 ```
 > git tag                                                  # List tags.
-> git tag <tag>                                            # Tag current commit with <tag>.
-> git tag <tag>                                            # Tag with <tag> specific commit with SHA-1 hash <sha>.
+> git tag "<tag>"                                          # Tag current commit with <tag>.
+> git tag "<tag>" <sha>                                    # Tag with <tag> specific commit with SHA-1 hash <sha>.
 > git push --tags                                          # Push tags to remote Git repository.
+```
+
+## Tools
+
+```
+> gitk                                                     # Git repository browser.
+> gource                                                   # Graphical Git repository version control visualisation.
 ```
 
 [![FOSS Cheat Sheets — License](https://img.shields.io/badge/LICENSE-CC0--1.0-blue?style=for-the-badge&logo=creativecommons&logoColor=white)](LICENSE.md)
