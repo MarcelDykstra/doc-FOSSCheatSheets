@@ -10,9 +10,9 @@
 > pacman -Qo <path>             # Report which package owns file located at <path>.
 > pacman -Qs "<reg.ex>"         # Search for packages matching <reg.ex>.
 > pacman -Q | grep "<reg.ex>"   # List installed packages, pipe to "grep" matching <reg.ex> (faster than "pacamn -Qs").
+> pacman -Qkk                   # Perform some security checks on installed packages (important for integrity SE/GNU/Linux).
 > pacman -S <package>           # Install <package> from internet repository.
-> pacman -U <tarball>           # Install package from <package>.tar.zst (tarball).
-> pacman -Rns <package>         # Remove <package> and orphan dependencies; do not create file backups ".pacsave".
+> pacman -Rns <package>         # Remove <package> and orphan dependencies; do not create configuration file backups ".pacsave".
 > pacman -Rns $(pacman -Qdtq)   # Remove orphan packages remaining on system.
 > pacman -Scc                   # Clear package cache.
 > pacman -S archlinux-keyring   # Update archlinux-keyring (Required before "pacman -Syu" after no recent full package updates).
@@ -36,4 +36,4 @@
 > grub-mkconfig -o /boot/grub/grub.cfg   # Generate a GRUB boot-loader configuration (configured in "/etc/default/grub").
 ```
 
-[![FOSS Cheat Sheets — License](https://img.shields.io/badge/LICENSE-CC0--1.0-blue?style=for-the-badge&logo=creativecommons&logoColor=white)](LICENSE.md)
+[![OSS Cheat Sheets — License](https://img.shields.io/badge/LICENSE-CC0--1.0-blue?style=for-the-badge&logo=creativecommons&logoColor=white)](LICENSE.md)

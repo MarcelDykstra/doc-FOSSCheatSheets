@@ -1,16 +1,16 @@
-# FOSS — Arch Linux (GNU/Linux) — POSIX Compliant — Cheat Sheets
+# OSS (security enhanced) — (SE/)GNU/Linux (Arch Linux) — POSIX Compliant — Cheat Sheets
 
 ## Command Nomenclature
 
 ```
  #    # Comment line.
  >    # Command shell.
-[ ]   # Element is optional.
-{|}   # Set of possible elements to choose from.
- |    # "or" separator between multiple elements.
-(,)   # Group of possible elements.
-...   # Preceding element can be repeated multiple times.
-< >   # User-defined element, variable or value.
+[ ]   # Argument is optional.
+{|}   # Set of possible arguments to choose from.
+ |    # "or" separator between multiple arguments.
+(,)   # Group of possible arguments.
+...   # Preceding argument can be repeated multiple times.
+< >   # User-defined argument, variable or value.
 ~ ~   # Keystroke command.
 ```
 
@@ -18,21 +18,23 @@
 
 ```
 > <command> [-v]                     # The -v flag is optional.
-> <command> [--flag=elmA|elmB]       # Choose elmA or elmB, or omit the flag entirely.
-> <command> --flag={elmA|elmB}       # Specify either elmA or elmB.
-> <command> -(elmA,elmB,elmC)        # Specify a combination of elmA, elmB, elmC.
-                                     # e.g. > <command> -ac
-> <command> <elm>...                 # Provide one or multiple of <elm>.
-> <command> [<elm>...]               # Provide zero, one or multiple of <elm>.
+> <command> [--flag=argA|argB]       # Choose argA or argB, or omit the flag entirely.
+> <command> --flag={argA|argB}       # Specify either argA or argB.
+> <command> -(argA,argB,argC)        # Specify a combination of argA, argB, argC.
+                                     # e.g. "> <command> -ac"
+> <command> <arg>...                 # Provide one or multiple of user-defined <arg>.
+> <command> [<arg>...]               # Provide zero, one or multiple of user-defined <arg>.
 ```
 
 ## Text File Nomenclature
 
 ```
-       [<file>]             # The <file> being referred to.
-       | <text.1>           # Text line <text.1> inside <file>.
- <nr.1>| <text.2>           # Text line <text.2> inside <file> at line number <nr.1>.
-<nr.2>?| <text.3>           # Text line <text.3> inside <file> near line number <nr.2>.
+#~[<file>]               # Indicate (begin) <file> being referred to (different comment character can be used e.g. "//").
+<text.1>                 # Text line <text.1> inside <file>.
+<text.2>  #~[<nr.1>]     # Text line <text.2> inside <file> at line number <nr.1>.
+<text.3>                 # Text line <text.3> inside <file> right after line numer <nr.1>.
+<text.3>  #~[<nr.2>?]    # Text line <text.3> inside <file> near line number <nr.2>.
+#~[<file>]               # Optional indicating end of <file> being referred to.
 ```
 
 ## Cheat Sheet Topics
@@ -60,7 +62,7 @@
 > ls -d */                   # List only sub-directories in current directory, not files.
 > ls <*.ext>...              # List files matching <*.ext> or matching multiple <*.ext> (globing).
 > cd <dir>                   # Change directory to <dir>.
-  # e.g. > cd /              # Change to root directory.
+  # e.g. "> cd /"            # Change to root directory.
 > cd ~                       # Change to home directory.
 > cd -                       # Change to previous directory.
 > cd ..                      # Change to parent directory.
@@ -79,10 +81,10 @@
 > rmdir <dir>...             # Remove directory <dir> or multiple <dir>, when empty.
 > rmdir -p <p.dir>/<dir>     # Remove directory <dir> and parent directory <p.dir> or multiple, when empty.
 > chown [<user>][:<group>] <file>...         # Change <file> or multiple <file> ownership to <user> and <group>.
-> chwon -R [<user>][:<group>] <path>...      # Change recursively all files in <path> or multiple <path>.
+> chown -R [<user>][:<group>] <path>...      # Change recursively all files in <path> or multiple <path>.
 > chmod (u,g,o)(=,+,-)(r,w,x) <file>...      # Change access rights on <file> or multiple <file>.
                                              # (u=user, g=group, o=others)(+=add, -=remove, ==define)(r=read, w=write, x=execute)
-  # e.g. > chmod ug+x <file>; chmod -w <file>
+  # e.g. "> chmod ug+x <file>; chmod -w <file>"
 > chmod -R (u,g,o)(=,+,-)(r,w,x) <path>...   # Change access rights recursively in <path> or multiple <path>.
 > chmod 000 <file>...         # Revoke all access rights on <file> or multiple <file>.
 > chmod 777 <file>...         # Provide full access rights on <file> or multiple <file>.
@@ -119,8 +121,8 @@
 > mkfs.ext4 <part.dev>        # Create ext4 file system at partition <part.dev> (not currently mounted).
 > mkswap <part.dev>           # Create a swap file system at partition <part.dev> (not currently mounted).
 > dd if=<in.file> of=<out.file> bs=<block.size>      # Raw copy <in.file> to <out.file> with <block.size> at a time (use kB, K, MB, M).
-  # e.g. > dd if=file.iso of=/dev/sda1 bs=10MB
-  # e.g. > dd if=file.iso of=/dev/sda1 bs=10MB status=progress
+  # e.g. "> dd if=file.iso of=/dev/sda1 bs=10MB"
+  # e.g. "> dd if=file.iso of=/dev/sda1 bs=10MB status=progress"
 > sfdisk -d <disk.dev>  >  <part.table.file>         # Write disk partition table at <disk.dev> to description in <part.table.file>.
 > sfdisk <disk.dev>  <  <part.table.file>            # Write disk partition table description in <part.table.file> to disk partition table at <disk.dev>.
 > partprobe <disk.dev>                               # Inform Linux kernel of changes to partition table at <disk.dev>.
@@ -154,9 +156,10 @@
 > less -R <file>...                           # Browse content of <file> or multiple <file> in color.
 > nl <file>...                                # Output <file> or multiple <file> numbering lines.
 > cut -d<delimiter> -f<field.num> <file>...   # Cut from every line in <file> or multiple <file> the field numbered <field.num> using <delimiter>.
-  # e.g. > cut -d: -f1  /etc/passwd           # Cut out usernames from "/etc/passwd".
-  # e.g. > cut -dL -f1,3  /etc/passwd         # Cut out first en third field from "/etc/passwd".
+  # e.g. "> cut -d: -f1  /etc/passwd"         # Cut out usernames from "/etc/passwd".
+  # e.g. "> cut -dL -f1,3  /etc/passwd"       # Cut out first en third field from "/etc/passwd".
 > tr 'a-z' 'A-Z'  <  <file>                   # Translate lowercase to uppercase of content in <file> (stdin).
+> file <file>...                              # Determine file type of <file> or multiple <file>.
 > hexdump <file>...                           # Output hexdump of <file> or multiple <file>.
 > hexdump -C <file>...                        # Output hexdump with additional ACSII representation of <file> or multiple <file>.
 > hexdump -C <file>... | less                 # Output hexdump with additional ASCII representation of <file> or multiple <file>, pipe to "less" (quit "less" with ~q~).
@@ -166,7 +169,7 @@
 > find <path> -name "*<.ext>"                 # Search starting at <path> to locate <.ext> (globing) recursively.
 > find <path> -user <username>                # Search starting at <path> to locate files owned by <user.name>.
 > find <path> -mtime -<days>                  # Search starting at <path> to locate files modified the last <days>.
-  # e.g. > find ~ -mtime -7                   # Search home directory for files modified the last 7 days.
+  # e.g. "> find ~ -mtime -7"                 # Search home directory for files modified the last 7 days.
 > grep -lir "<string|reg.exp>"                # Search files for matching <string|reg.exp> recursively.
 > diff -u <file.old> <file.new>               # Output difference between <file.old> "---" and <file.new> "+++".
 > diff -u <file.old> <file.new>  >  <file.patch>    # Write difference between <file.old> "---" and <file.new>. "+++" to patch file <file.patch>.
@@ -209,7 +212,7 @@
 > su <user.name>                                              # Switch to other user with <user.name>.
 > sudo <command>                                              # Execute <command> with "root" privileges.
 > useradd -m -g <prim.group> [-G <sec.group.1>,<sec.group.2>,...] -d <home-dir> <user.name>    # Add new user manually.
-  # e.g. > useradd -m -g users -G wheel -d /home/<username> <user.name>
+  # e.g. "> useradd -m -g users -G wheel -d /home/<username> <user.name>"
 > userdel <user.name>                                         # Delete user with <user.name>.
 > userdel -r <user.name>                                      # Delete user with <user.name>, removing home directory.
 > usermod -g <prim.group> <user.name>                         # Force a new primary group <prim.group> for user with <user.name>.
@@ -235,15 +238,15 @@
 > info                                             # GNU coreutils info.
 > <command> --help                                 # Output help about command-line options for <command>.
 > man <command>                                    # Manual page about <command>.
-  # e.g. > man (sed, grep, tac, fdisk, man, mkfs.ext3, ssh, systemctl, journalctl, autoscan, autoconf, aclocal, automake, pacman, makepkg, &c.)
+  # e.g. "> man (sed, grep, tac, fdisk, man, mkfs.ext3, ssh, systemctl, journalctl, autoscan, autoconf, aclocal, automake, pacman, makepkg, &c.)"
 > man <section> <command>                          # Manual page about <command> under specific numbered <section>.
 > clear                                            # Clear terminal screen.
 > ~Ctrl+l~                                         # Clear terminal screen.
 > ~Ctrl+d~                                         # End user input to running process (leave interactive shell).
 > reset                                            # Reset terminal state.
-                                                   # Historically certain commands could upset the terminal output; e.g. terminal characters (> cat <binary>).
+                                                   # Historically certain commands could upset the terminal output; e.g. terminal characters ("> cat <binary>").
 > setfont <font.type> [-h<height>]                 # Set TTY <font.type>, with possible line <height>.
-  # e.g. > setfont Lat2-Terminus16 -h15
+  # e.g. "> setfont Lat2-Terminus16 -h15"
 > xrandr <...>                                     # Adjust size, orientation, reflection of X11 screens.
 > xrandr --listproviders                           # Report on available X11 graphic drivers.
 > mesg -n                                          # Disable wall messages.
@@ -258,17 +261,17 @@
 > echo "<string>"                                  # Output text <string>.
 > echo $VAR                                        # Output $VAR shell variable content.
 > printf "\e[<esc.code>;...m%s\e[0" "<string>"     # Output ECMA-48 (ANSI) escape "\e[<esc.code>m" coded text <string>:
-                                                   # 0=reset color and style.
+                                                   # 0=reset color and style (without trailing "m").
                                                    # color: +30=normal fg., +40=normal bg., +90=bright fg., +100=bright bg. —
                                                    #        0=black, 1=red, 2=green, 3=yellow, 4=blue, 5=magenta, 6=cyan, 7=white.
                                                    # style: 1=bold, 2=dim, 3=italic, 4=underline, 5/6=blink, 7=inverse,
                                                    #        8=hidden, 9=strike-through.
-  # e.g. > printf "\e[31;44;1;5mHello World\e0"    # Output "Hello World" bold and blinking on a normal blue bg. with normal red fg.
+  # e.g. "> printf "\e[31;44;1;5mHello World\e0""  # Output "Hello World" bold and blinking on a normal blue bg. with normal red fg.
 > whereis <command>                                # Locate <command> and manual page for <command>.
 > which <command>                                  # Give full path of <command>.
 > date                                             # Give system date and time.
 > watch -n <interval> "<command>"                  # Execute <command> repeatedly every <interval>.
-  # e.g. > watch -n 1 "ps aux"                     # Execute "ps aux" every second.
+  # e.g. "> watch -n 1 "ps aux""                   # Execute "ps aux" every second.
 > time <command>                                   # Measure execution time of <command>.
 > vim [<file>]...                                  # Open Vim text editor, optional with <file> or multiple <file>.
 > nano [<file>]...                                 # Open Nano text editor, optional with <file> or multiple <file>.
@@ -287,17 +290,18 @@
 > <command>  &>>  <file>                       # Redirect both stdout and stderr to append to <file>.
 > <command>  2>&1  >  <file>                   # Redirect stderr to stdout, thus redirecting both streams of <command> to <file>.
 > <command.1>  2>&1  |  <command.2>            # Redirect stderr to stdout, piping both streams of <command.1> to stdin of <command.2>.
-> <command>  |  tee <file.1> <file.2>          # Redirect stdout of <command> to stdin of "tee", which redirects to both <file.1> and <file.2>.
-> <command>  |  tee -a <file.1> <file.2>       # Redirect stdout of <command> to stdin of "tee",
-                                               # which redirects and appends to both <file.1> and <file.2>.
+> <command>  |  tee <file.1> <file.2>          # Pipe stdout of <command> to stdin of "tee", which copies to both <file.1>, <file.2> and stdout.
+> <command>  |  tee -a <file.1> <file.2>       # Pipe stdout of <command> to stdin of "tee",
+                                               # which copies and appends to both <file.1>, <file.2> and stdout.
 > <command.1>  |  tee <file>  |  <command.2>   # Pipe stdout of <command.1> to stdin of <command.2>,
-                                               # while also using "tee" to redirect stdout of <command.1> to <file>.
+                                               # while also using "tee" to copy stdout of <command.1> to <file> and stdout.
 > <command>  &>  /dev/null                     # Redirect both stdout en stderr of <command> to "/dev/null" (i.e. redirection to a black-hole).
+> cat /dev/null > <file>                       # Redirect content "/dev/null" to file, making effectively an empty <file>.
 > <command>  <<  EOF                           # Take user input until "EOF" (end-of-file) is again written on a final single line,
                                                # redirect this user input to stdin of <command>.
                                                # EOF is often written out in shell scripts (heredoc) and can go by any other name as sweet (e.g. CONF, INPT, &c.)
 > <command>  <<  EOF  >  <file>                # Redirect user input to stdin of <command>, redirect stdout of <command> to <file>.
-                                               # e.g. > sort  <<  EOF  >  sorted.txt
+                                               # e.g. "> sort  <<  EOF  >  sorted.txt"
  ```
 
 ## Process & Memory Commands
@@ -310,7 +314,7 @@
 > kill -TERM <pid>                # Terminate application, with <pid> found in second column of "ps -aux" or through "pidof".
 > kill -KILL <pid>                # Forcefully remove application with given <pid>.
 > killall <application>           # Terminate all applications matching <application>.
-  # e.g. > killall firefox
+  # e.g. "> killall firefox"
 > killall -KILL <application>     # Forcefully remove all applications matching <application>.
 > ~Ctrl+c~                        # Kill running process.
 > ~Ctrl+z~                        # Break away from running process, forcing it to run in background.
@@ -320,7 +324,7 @@
 > bg <pid>|%<job id>              # Run job <pid>|%<job id> in background.
 > <command> &                     # Start <command> in background.
 > nice -n <priority> <command>    # Start <command> with given <priority>.
-  # e.g. > nice -n 10 /usr/bin/bash
+  # e.g. "> nice -n 10 /usr/bin/bash"
 > renice <priority> <pid>         # Change <priority> of running <pid>.
 > pstree                          # List process tree of system parent and child processes.
 > pstree -A                       # List process tree of system parent and child processes, with ASCII character output.
@@ -347,12 +351,12 @@
 > lsmod                                   # List loaded Linux kernel modules.
                                           # (When a module being listed is not used, it does mean the module is loaded into the Linux kernel.)
 > modprobe <module.name>                  # Load Linux kernel module (preferred over > insmod <module.file>).
-                                          # Linux kernel modules are located "/lib/modules/$(uname -r)/").
+                                          # Linux kernel modules are located "/lib/modules/$(uname -r)/".
                                           # During boot udev loads Linux kernel modules based on detected hardware (modalias) or
                                           # modules are statically loaded in "/etc/modules-load.d/" or
                                           # blacklisted in "/etc/modprobe.d/".
                                           # Check "dmesg" to determine problems (e.g. tainted kernel).
-> modprobe -r <module.name>               # Remove Linux kernel module (preferred over > rmmod <module.file>).
+> modprobe -r <module.name>               # Remove Linux kernel module (preferred over "> rmmod <module.file>").
 > depmod -a                               # Scan for all Linux kernel modules in "/lib/modules/$(uname -r)/"; information stored for use with "modprobe".
 > modinfo <module.name|module.file>       # Show information about Linux kernel module.
 ```
@@ -369,12 +373,11 @@
 > systemctl stop <service>                # Stop systemd <service>.
 > systemctl status                        # Show tree view of systemd status.
 > systemctl status "<service>*"           # Get status of systemd services with service-name starting with <service> (globing).
-> systemctl --user start <service>        # Start systemd user <service>.
-> systemctl --user stop <service>         # Stop systemd user <service>.
 > systemctl list-unit-files [--state=enabled] ["<service>*"]    # List unit files, possibly those enabled [--state=enabled] and
                                                                 # possibly service-name(s) starting with <service> (globing).
 > systemctl poweroff [--no-wall]          # System shutdown, optionally without pesky wall message [--no-wall].
 > systemctl reboot [--no-wall]            # System reboot, optionally without pesky wall message [--no-wall].
+> systemctl --user <argument>...          # Apply systemctl command not to system wide services, but to current user services.
 > journalctl                              # Show full systemd journal.
 > journalctl -b                           # Show systemd journal since last boot.
 > journalctl -b -1                        # Show systemd journal of previous boot.
@@ -383,6 +386,8 @@
                                           # 0-emerg, 1-alert, 2-crit, 3-err, 4-warning, 5-notice, 6-info, 7-debug.
 > journalctl -b -p <level.1>..<level.2>   # Show systemd journal since last boot, with entries of severity between <level.1> and <level.2>; both can be of same value.
 > journalctl -n <lines>                   # Show systemd journal limited to <lines> number of lines.
+> journalctl --verify                     # Check systemd journal log files for data corruption.
+> jounralctl --rotate                     # Close and start new journal log file (use before deleting corrupted log files).
 > loginctl                                # Control the systemd login manager, showing sessions.
 > loginctl user-status [<user.name>...]   # Show tree view of one or more logged in users.
 > loginctl session-status                 # Show tree view of one or more sessions.
@@ -404,10 +409,10 @@
                                                    # Use gdb commands: "bt" (backtrace), "bt full", "list" (surrounding source-code), "quit", &c.
 
 # Generate debug symbols — Arch Linux
-[/etc/makepkg.conf]                                # Have "debug" option included (not "!debug"), to generate debug symbols
-| OPTIONS=(... debug ...)                          # during "makepkg -rs" package compilation;
+#~[/etc/makepkg.conf]                              # Have "debug" option included (not "!debug"), to generate debug symbols
+OPTIONS=(... debug ...)                            # during "makepkg -rs" package compilation;
                                                    # "debugedit" package should be installed and useful to have "$DEBUGINFOD_URLS" defined.
-                                                   # Debug symbols are compiled as a separate debug package to be installed with software package.
+#~[/etc/makepkg.conf]                              # Debug symbols are compiled as a separate debug package to be installed with software package.
 > objdump --syms <executable|obj.file>...          # Show debug symbol table inside executable <executable> or object file <obj.file> or multiple <executable|obj.file>.
 ```
 
@@ -420,20 +425,21 @@
 > ip link                                                                          # Show network interfaces.
 > ip link set dev <interface> (up,down)                                            # Bring network device <interface> up or down.
 > ip addr add <ip-address>/<netmask> [broadcast <b.ip-address>] dev <interface>    # Set manual IP addresses.
-  # e.g. > ip addr add 192.168.1.1/24 broadcast 192.168.1.255 dev wpl3s0
+  # e.g. "> ip addr add 192.168.1.1/24 broadcast 192.168.1.255 dev wpl3s0"
 > nmcli [<arg>...] --help                                                          # Ask help about the many arguments — NetworkManager.
 > nmcli general status                                                             # Show network connectivity status.
 > nmcli general permissions                                                        # Show Polkit(PolicyKit) permissions for network tasks.
-> nmcli networking (on,off)                                                        # Turn network on or off.
-> nmcli radio (all,wifi,wwan) (on,off)                                             # Turn radio on or off for either: all, wifi or wwan.
+> nmcli networking (on, off)                                                       # Turn network on or off.
+> nmcli radio (all, wifi, wwan) (on, off)                                          # Turn radio on or off for either: all, wifi or wwan.
 > nmcli connection show                                                            # Show active connection profiles and inactive available connection profiles.
-> nmcli connection (up,down) <id>                                                  # Bring network connection profile <id> up or down.
+> nmcli connection (up, down) <id>                                                 # Bring network connection profile <id> up or down.
 > nmcli connection add type ethernet con-name "<name>" ifname <dev>                # Create standard DHCP ethernet connection profile <name>,
                                                                                    # with dynamic assigned IP on device <dev>
                                                                                    # (find <dev> with "nmcli device status").
 > nmcli connection delete <id>                                                     # Delete the network connection profile <id>.
 > nmcli connection delete id "<id with spaces>"                                    # Delete the network connection profile <id with spaces>.
 > nmcli device status                                                              # Show status of network devices.
+> nmcli device wifi list                                                           # List information about available wifi networks.
 > nmcli device wifi connect <ssid> password <password>                             # Connect to wifi network name <ssid> with password <password>.
 > nmcli device wifi rescan; nmcli device wifi list                                 # Scan for available wifi networks and give a list.
 > nmcli monitor                                                                    # Monitor any changes in NetworkManager.
@@ -444,7 +450,7 @@
 > nslookup <domain|ip-address>              # DNS lookup of <domain> or reverse lookup of <ip-address>.
 > nslookup -type=mx <domain>                # MX (mail exchange) DNS lookup of <domain>.
 > curl <url>                                # Get response from server at <url>.
-  # e.g. > curl -s 6.ipquail.com/ip         # Get silently the current outward facing IPv6 address through server response at "6.ipquail.com/ip".
+  # e.g. "> curl -s 6.ipquail.com/ip"       # Get silently the current outward facing IPv6 address through server response at "6.ipquail.com/ip".
 > wget <url>...                             # Download files from internet at <url> or multiple <url>.
 > ssh-keygen -t rsa -b 4096 -C "user_email@host.domain"   # Generate SSH public/private RSA-keys (optionally give no passphrase).
 > ssh-keygen -t rsa -b 4096 -C "user@host"                # Generate SSH public/private RSA-keys (optionally give no passphrase).
@@ -459,4 +465,4 @@
 > i2cdetect -y -r 1    # Detect connected I2C-chips on e.g. Raspberry PI or BeagleBone.
 ```
 
-[![FOSS Cheat Sheet — License](https://img.shields.io/badge/LICENSE-CC0--1.0-blue?style=for-the-badge&logo=creativecommons&logoColor=white)](LICENSE.md)
+[![OSS Cheat Sheet — License](https://img.shields.io/badge/LICENSE-CC0--1.0-blue?style=for-the-badge&logo=creativecommons&logoColor=white)](LICENSE.md)

@@ -17,7 +17,8 @@
 > git remote remove <remote> <url>                         # Remove remote <remote> for Git local repository.
 > git fetch                                                # Fetch from remote Git repository.
 > git fetch <remote>                                       # Fetch from specific <remote> Git repository.
-> git pull                                                 # Pull from remote Git repository and apply to working directory.
+> git pull                                                 # Pull from remote Git repository and apply to the working directory.
+> git pull --rebase                                        # Pull from remote Git repository and rebase rather than merge to the working directory (e.g. after a forced push to server).
 > git push                                                 # Push staging to remote Git repository.
 > git push -f                                              # Force push to remote Git repository (will upset local repositories of others).
 > git log                                                  # Show commit log.
@@ -39,6 +40,8 @@
 > git rebase -i --root                                     # Rebase everything from first commit interactively.
 > git rebase --abort                                       # Abort rebasing.
 > git pull --rebase                                        # Pull rebase from remote.
+> git stash                                                # Stash changed in dirty working directory; allowing to use other Git commands on working directory.
+> git stash pop                                            # Apply stash back to working directory, removing stash entry from stash list.
 ```
 
 ## Checkout
@@ -87,4 +90,4 @@
 > gource                                                   # Graphical Git repository version control visualisation.
 ```
 
-[![FOSS Cheat Sheets — License](https://img.shields.io/badge/LICENSE-CC0--1.0-blue?style=for-the-badge&logo=creativecommons&logoColor=white)](LICENSE.md)
+[![OSS Cheat Sheets — License](https://img.shields.io/badge/LICENSE-CC0--1.0-blue?style=for-the-badge&logo=creativecommons&logoColor=white)](LICENSE.md)
